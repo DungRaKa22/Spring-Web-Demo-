@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Chức Vụ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">HỆ THỐNG QUẢN LÝ</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/chucvu}">Quản lý Chức Vụ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/nhanvien}">Quản lý Nhân Viên</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/taikhoan}">Quản lý Tài Khoản</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 class="text-center mb-4 text-primary">QUẢN LÝ CHỨC VỤ</h2>
+
+    <div class="card p-3 mb-4 shadow-sm">
+        <form th:action="@{/chucvu/save}" th:object="${chucVuMoi}" method="post" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Mã Chức Vụ</label>
+                <input type="text" th:field="*{machucvu}" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Tên Chức Vụ</label>
+                <input type="text" th:field="*{tenchucvu}" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Ghi Chú</label>
+                <input type="text" th:field="*{ghichu}" class="form-control">
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-success w-100">Lưu</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>Mã Chức Vụ</th>
+            <th>Tên Chức Vụ</th>
+            <th>Ghi Chú</th>
+            <th class="text-center">Thao Tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cv : ${listChucVu}">
+            <td th:text="${cv.machucvu}"></td>
+            <td th:text="${cv.tenchucvu}"></td>
+            <td th:text="${cv.ghichu}"></td>
+            <td class="text-center">
+                <a th:href="@{/chucvu/delete/{id}(id=${cv.machucvu})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
